@@ -8,6 +8,8 @@ import { Chart } from 'chart.js';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  chart = [];
   //title = 'app';
   //#we could access the weatherServices with the method we created
   constructor(private _weather: WeatherService) {}
@@ -25,7 +27,38 @@ export class AppComponent {
           let jsdate = new Date(res * 1000)
           weatherDates.push(jsdate.toLocaleTimeString('en', { year: 'numeric', month: 'short', day: 'numeric' }))
         })
-        console.log(weatherDates)
+        //console.log(weatherDates)
+        this.chart = new Chart('canvas', {
+          type: 'line',
+          data: {
+            labels: weatherDates,
+            datasets: [
+              {
+                data: temp_max,
+                borderColor: '#3cba9f',
+                fill: false
+              },
+              {
+                data: temp_min,
+                borderColor: '#ffcc00',
+                fill: false
+              }
+            ]
+          },
+          options: {
+            lengend: {
+              display: false
+            },
+            scales: {
+              xAxes: [{
+                display: true
+              }],
+              yAxes: [{
+                display: true
+              }]
+            }
+          }
+        })
       })
   }
 }
